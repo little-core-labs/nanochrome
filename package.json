@@ -1,0 +1,34 @@
+{
+  "name": "nanochrome",
+  "version": "0.0.0",
+  "description": "Launch a Chrome Browser as a nanoprocess.",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc tape test.js"
+  },
+  "keywords": [
+    "nanoprocess",
+    "nanoresource",
+    "chrome",
+    "launch",
+    "open"
+  ],
+  "author": "Joseph Werle <joseph.werle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chrome-launcher": "^0.11.2",
+    "nanoprocess": "^0.2.1"
+  },
+  "devDependencies": {
+    "nyc": "^14.1.1",
+    "tape": "^4.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/little-core-labs/nanochrome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/little-core-labs/nanochrome/issues"
+  },
+  "homepage": "https://github.com/little-core-labs/nanochrome#readme"
+}
