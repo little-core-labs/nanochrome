@@ -9,7 +9,6 @@ const nanochrome = require('./')
 test('const chrome = nanochrome(url[, opts])', (t) => {
   const server = http.createServer((req, res) => {
     res.end('hello')
-    server.close()
   })
 
   server.listen(0, (err) => {
@@ -20,6 +19,7 @@ test('const chrome = nanochrome(url[, opts])', (t) => {
       t.notOk(err)
       chrome.close((err) => {
         t.notOk(err)
+        server.close()
         t.end()
       })
     })
@@ -29,7 +29,6 @@ test('const chrome = nanochrome(url[, opts])', (t) => {
 test('nanochrome() - app', (t) => {
   const server = http.createServer((req, res) => {
     res.end('hello')
-    server.close()
   })
 
   server.listen(0, (err) => {
@@ -44,6 +43,7 @@ test('nanochrome() - app', (t) => {
       t.notOk(err)
       chrome.close((err) => {
         t.notOk(err)
+        server.close()
         t.end()
       })
     })
@@ -56,7 +56,6 @@ test('nanochrome() - app flag precedence', (t) => {
       '/from-chrome-flags' === req.url ||
       '/favicon.ico' === req.url)
     res.end('hello')
-    server.close()
   })
 
   server.listen(0, (err) => {
@@ -76,6 +75,7 @@ test('nanochrome() - app flag precedence', (t) => {
       t.notOk(err)
       chrome.close((err) => {
         t.notOk(err)
+        server.close()
         t.end()
       })
     })
