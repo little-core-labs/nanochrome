@@ -12,6 +12,7 @@ test('const chrome = nanochrome(url[, opts])', (t) => {
   })
 
   server.listen(0, (err) => {
+    t.error(err)
     const { port } = server.address()
     const uri = url.format({ protocol: 'http:', hostname: 'localhost', port })
     const chrome = nanochrome(uri, { headless: true })
@@ -32,6 +33,7 @@ test('nanochrome() - app', (t) => {
   })
 
   server.listen(0, (err) => {
+    t.error(err)
     const { port } = server.address()
     const uri = url.format({ protocol: 'http:', hostname: 'localhost', port })
     const chrome = nanochrome(uri, {
@@ -59,6 +61,7 @@ test('nanochrome() - app flag precedence', (t) => {
   })
 
   server.listen(0, (err) => {
+    t.error(err)
     const { port } = server.address()
     const uri = new url.URL(url.format({
       protocol: 'http:', hostname: 'localhost', port
