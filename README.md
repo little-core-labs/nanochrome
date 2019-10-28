@@ -32,7 +32,8 @@ chrome.open((err) => {
 
 Creates a new `Chrome` ([nanoprocess][nanoprocess]) instance from `uri`
 with optional `options` that are passed directly to
-[`chrome.launch()`][chrome-launcher]. `options` can also be:
+[`chrome.launch()`](
+https://github.com/GoogleChrome/chrome-launcher#launchopts). `options` can also be:
 
 ```js
 {
