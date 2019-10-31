@@ -24,12 +24,5 @@ jobs:
         xvfb-run --auto-servernum npm test
       env:
         CI: true
-    - name: cleanup xvfb
-      run: |
-        xvfb_pids=`ps aux | grep tmp/xvfb-run | grep -v grep | awk '{print $2}'`
-        if [ "$xvfb_pids" != "" ]; then
-          echo "Killing the following xvfb processes: $xvfb_pids"
-          sudo kill $xvfb_pids
-        else
-          echo "No xvfb processes to kill"
-        fi
+    - name: Cleanup xvfb pidx
+      uses: bcomnes/cleanup-xvfb@v1
