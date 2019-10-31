@@ -12,7 +12,7 @@ test('const chrome = nanochrome(url[, opts])', (t) => {
     res.end('hello')
     t.pass('request received')
     chrome.close((err) => {
-      t.notOk(err, 'chrome closed without error')
+      t.error(err, 'chrome closed without error')
       server.close((err) => {
         t.error(err, 'server closed without error')
         t.end()
@@ -26,7 +26,7 @@ test('const chrome = nanochrome(url[, opts])', (t) => {
     const uri = url.format({ protocol: 'http:', hostname: 'localhost', port })
     chrome = nanochrome(uri, { headless: true })
     chrome.open((err) => {
-      t.notOk(err, 'chrome opened without error')
+      t.error(err, 'chrome opened without error')
     })
   })
 })
@@ -42,7 +42,7 @@ test('nanochrome() - app', (t) => {
 
   function shutdownTest () {
     chrome.close((err) => {
-      t.notOk(err, 'chrome closed without error')
+      t.error(err, 'chrome closed without error')
       server.close((err) => {
         t.error(err, 'server closed without error')
         t.end()
@@ -78,7 +78,7 @@ test('nanochrome() - app flag precedence', (t) => {
 
   function shutdownTest () {
     chrome.close((err) => {
-      t.notOk(err, 'chrome closed without error')
+      t.error(err, 'chrome closed without error')
       server.close((err) => {
         t.error(err, 'server closed without error')
         t.end()
@@ -101,7 +101,7 @@ test('nanochrome() - app flag precedence', (t) => {
     })
 
     chrome.open((err) => {
-      t.notOk(err, 'chrome opened without error')
+      t.error(err, 'chrome opened without error')
     })
   })
 })
