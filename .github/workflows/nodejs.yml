@@ -22,6 +22,8 @@ jobs:
       run: |
         npm i
         xvfb-run --auto-servernum npm test
+      env:
+        CI: true
     - name: cleanup xvfb
       run: |
         xvfb_pids=`ps aux | grep tmp/xvfb-run | grep -v grep | awk '{print $2}'`
@@ -31,5 +33,3 @@ jobs:
         else
           echo "No xvfb processes to kill"
         fi
-      env:
-        CI: true
