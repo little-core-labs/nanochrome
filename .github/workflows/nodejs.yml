@@ -17,9 +17,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: sudo apt-get install xvfb
-    - run: export DISPLAY=':99.0'
-    - run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+    - name: Install xvfb
+      run: sudo apt-get install xvfb
+      run: export DISPLAY=':99.0'
+      run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     - name: npm install, build, and test
       run: |
         npm i
