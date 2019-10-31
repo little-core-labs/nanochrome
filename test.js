@@ -7,65 +7,93 @@ const { Chrome } = require('./')
 const nanochrome = require('./')
 
 test('const chrome = nanochrome(url[, opts])', (t) => {
+  let chrome
   const server = http.createServer((req, res) => {
     res.end('hello')
-    server.close()
+    t.pass('request received')
+    chrome.close((err) => {
+      t.error(err, 'chrome closed without error')
+      server.close((err) => {
+        t.error(err, 'server closed without error')
+        t.end()
+      })
+    })
   })
 
   server.listen(0, (err) => {
+    t.error(err, 'server started without error')
     const { port } = server.address()
     const uri = url.format({ protocol: 'http:', hostname: 'localhost', port })
-    const chrome = nanochrome(uri, { headless: true })
+    chrome = nanochrome(uri, { headless: true })
     chrome.open((err) => {
-      t.notOk(err)
-      chrome.close((err) => {
-        t.notOk(err)
-        t.end()
-      })
+      t.error(err, 'chrome opened without error')
     })
   })
 })
 
 test('nanochrome() - app', (t) => {
+  let chrome
+  let shutdownTimeout
   const server = http.createServer((req, res) => {
     res.end('hello')
-    server.close()
+    t.pass('request received')
+    if (!shutdownTimeout) shutdownTimeout = setTimeout(shutdownTest, 100)
   })
 
+  function shutdownTest () {
+    chrome.close((err) => {
+      t.error(err, 'chrome closed without error')
+      server.close((err) => {
+        t.error(err, 'server closed without error')
+        t.end()
+      })
+    })
+  }
+
   server.listen(0, (err) => {
+    t.error(err, 'server started without error')
     const { port } = server.address()
     const uri = url.format({ protocol: 'http:', hostname: 'localhost', port })
-    const chrome = nanochrome(uri, {
+    chrome = nanochrome(uri, {
       app: true,
       chromeFlags: [ '--disable-gpu' ]
     })
 
     chrome.open((err) => {
-      t.notOk(err)
-      chrome.close((err) => {
-        t.notOk(err)
-        t.end()
-      })
+      t.error(err, 'chrome opened without error')
     })
   })
 })
 
 test('nanochrome() - app flag precedence', (t) => {
+  let chrome
+  let shutdownTimeout
   const server = http.createServer((req, res) => {
     t.ok(
       '/from-chrome-flags' === req.url ||
-      '/favicon.ico' === req.url)
+      '/favicon.ico' === req.url, 'request received')
     res.end('hello')
-    server.close()
+    if (!shutdownTimeout) shutdownTimeout = setTimeout(shutdownTest, 100)
   })
 
+  function shutdownTest () {
+    chrome.close((err) => {
+      t.error(err, 'chrome closed without error')
+      server.close((err) => {
+        t.error(err, 'server closed without error')
+        t.end()
+      })
+    })
+  }
+
   server.listen(0, (err) => {
+    t.error(err, 'server started without error')
     const { port } = server.address()
     const uri = new url.URL(url.format({
       protocol: 'http:', hostname: 'localhost', port
     }))
 
-    const chrome = nanochrome(uri, {
+    chrome = nanochrome(uri, {
       app: true,
       chromeFlags: [
         `--app=${path.join(String(uri), '/from-chrome-flags')}`
@@ -73,11 +101,7 @@ test('nanochrome() - app flag precedence', (t) => {
     })
 
     chrome.open((err) => {
-      t.notOk(err)
-      chrome.close((err) => {
-        t.notOk(err)
-        t.end()
-      })
+      t.error(err, 'chrome opened without error')
     })
   })
 })
